@@ -1,0 +1,6 @@
+S3method(mean, "IntegerFrequencyTable")
+S3method(hist, "IntegerFrequencyTable")
+
+export(IntegerFrequencyTable)
+
+
