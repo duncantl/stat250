@@ -1,0 +1,8 @@
+Package: AirlineDelays
+Version: 0.1-0
+Author: DTL <duncan@r-project.org>
+Maintainer: DTL <duncan@r-project.org>
+Title: Calculate arrival delay statistics for "large" amount of data
+Description: This explores different ways of computing the mean, median, 
+ SD of the arrival delay from a collection of CSV files.
+License: GPL2
