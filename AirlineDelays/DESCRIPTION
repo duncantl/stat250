@@ -6,3 +6,5 @@ Title: Calculate arrival delay statistics for "large" amount of data
 Description: This explores different ways of computing the mean, median, 
  SD of the arrival delay from a collection of CSV files.
 License: GPL2
+Note: There is a new problem with one version of the thread code where we want to specify
+  the field number to extract, but we just pass the name of the file.
