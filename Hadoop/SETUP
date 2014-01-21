@@ -1,0 +1,6 @@
+This is for running on your own machine:
+
+Define JAVA_HOME
+Put hadoop executable in your executable path.
+
+ export PATH=$PATH:${HOME}/Downloads/hadoop-2.2.0/bin
