@@ -1,13 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>  // for exit().
 
 
+    /* Declarations of routines defined below. */
 long processLines(FILE *stream, int fieldNum, char delim);
 int processLine(char * const line, int fieldNum, char delim);
 
 
+typedef char * string;
 int
-main(int argc, char *argv[])
+main(int argc, string argv[])
 {
     /* For now, assume the first argument is the field, second is the delimeter and the third is the name of the file.
        If the third argument is not present, then read from standard input. We can relax these assumptions later by processing the command 
@@ -40,8 +42,10 @@ main(int argc, char *argv[])
 
 #define MAX_CHARS 2000
 
+typedef FILE *  myFile;
+
 long
-processLines(FILE *stream, int fieldNum, char delim)
+processLines(myFile stream, int fieldNum, char delim)
 {
     char line[MAX_CHARS];
     long ctr = 0;

@@ -1,0 +1,7 @@
+Process command line arguments
+  Use the getopt library.
+
+Add a skip flag to allow ignoring first k lines
+  Could use this for skipping the header row and avoiding passing each line through a grep filter.
+
+Can we parallelize this?
