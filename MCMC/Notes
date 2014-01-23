@@ -1,0 +1,10 @@
+Can use BUGS, JAGS, STAN (NIMBLE) to do this.
+We are implementing this ourselves for pedagogical purposes.
+
+
+Gamma distribution
+  different ways to parameterize it.
+   alpha is shape
+   beta is scale
+
+Inverse Gamma random variable is a 1 / X where X is a Gamma random variable.
