@@ -1,4 +1,5 @@
 #include <Rmath.h> // for log()
+#include <stdio.h>
 
 #define MIN(a, b)  ((a) < (b) ? (a) : (b))
 
