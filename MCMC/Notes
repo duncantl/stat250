@@ -8,3 +8,8 @@ Gamma distribution
    beta is scale
 
 Inverse Gamma random variable is a 1 / X where X is a Gamma random variable.
+
+
+Use
+  R CMD COMPILE mcmc.c
+since we will be using routines from R's Rmath library for random number generation.
