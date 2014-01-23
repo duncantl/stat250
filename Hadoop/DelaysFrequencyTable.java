@@ -26,7 +26,7 @@ public class DelaysFrequencyTable {
               throws Exception 
     {
 
-	Job job = new Job(new Configuration());
+	Job job = new Job(new Configuration()); // Job.getInstance(new Configuration()) for 2.2.0
 	job.setJarByClass(DelaysFrequencyTable.class);
 	job.setJobName("Delay Frequency Table");
 
@@ -41,7 +41,6 @@ public class DelaysFrequencyTable {
 
 	job.setMapOutputKeyClass(IntWritable.class);
 	job.setMapOutputValueClass(IntWritable.class);
-
 
 
 	System.exit(job.waitForCompletion(true) ? 0 : 1);
