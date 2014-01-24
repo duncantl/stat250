@@ -2,6 +2,8 @@ chptdat = read.table("http://www.stat.psu.edu/~mharan/MCMCtut/COUP551_rates.dat"
 Y=chptdat[,2] # store data in Y
 
 ts.plot(Y,main="Time series plot of change point data")
+
+
 source("template.R")
 a = mhsampler(1e4)
 
