@@ -1,4 +1,5 @@
-chptdat = read.table("http://www.stat.psu.edu/~mharan/MCMCtut/COUP551_rates.dat",skip=1) 
+#chptdat = read.table("http://www.stat.psu.edu/~mharan/MCMCtut/COUP551_rates.dat",skip=1)
+chptdat = read.table("COUP551_rates.dat",skip=1)
 Y=chptdat[,2] # store data in Y
 
 ts.plot(Y,main="Time series plot of change point data")
