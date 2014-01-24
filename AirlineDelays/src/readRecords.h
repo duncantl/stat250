@@ -5,7 +5,7 @@ double readDelays(const char *filename, void *d, int fieldNum);
 #define MAX_NUM_VALUES 4000
 
 //#define FIELD_NUM 44
-#define FIELD_NUM 15
+#define FIELD_NUM 14
 
 
 /* Really want a C++ class. */

@@ -20,3 +20,17 @@ function(filename)
   w = sapply(tmp, is.character)
   i + length(grep(",", as.character(tmp[1,w]))) - 1L
 }
+
+
+getDelayTable_thread =
+  #
+  # Take the files and field numbers and group them
+  # and then divide them into numThreads groups.
+  #
+  #
+function(files, fieldNum = sapply(files, getFieldNum), numThreads = 4L)
+{
+  tt = .Call("R_threaded_multiReadDelays", as.integer(numThreads), TRUE, as.integer(fieldNum))
+  tt[tt > 0]
+}
+

@@ -19,4 +19,6 @@ It would be much easier if this was an R package and then we could
 install, with the data accessible via data() and the two functions
 exported and the C code compiled automatically.
 
+For  1e6 iterations, we see a speed up of a factor of approximately 60.
+
 

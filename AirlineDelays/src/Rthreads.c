@@ -22,7 +22,7 @@ R_serial_multiDelays(SEXP filenames, SEXP fieldNum)
 /* This is the R entry point for processing multiple files within each thread.
    filenames is a list of character vectors.  */
 SEXP 
-R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable)
+R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable, SEXP fieldNum)
 {
 
     int n = INTEGER(numThreads)[0];
@@ -41,6 +41,7 @@ R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable)
 	FileNames *fn = malloc(sizeof(FileNames));
 	fn->numEls = Rf_length(VECTOR_ELT(filenames, t));
 	fn->filenames = (const char * *) malloc(sizeof(char *) * fn->numEls);
+	fn->fieldNum = INTEGER(fieldNum)[t]; /* a single integer vector which means that all of the files in the same thread have to have the same field number. We can relax this restriction. */
 	for(int i = 0; i < fn->numEls; i++)
 	    fn->filenames[i] = CHAR(STRING_ELT(VECTOR_ELT(filenames, t), i));
 	tables[t] = fn->counts = makeTable(NULL);
@@ -72,7 +73,10 @@ R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable)
 
 
 
-/* R callable/entry point for invoking the threaded version of processing several files concurrently. */
+/* R callable/entry point for invoking the threaded version of processing several files concurrently. 
+   As this stands, this doesn't return the counts at all. It is only to determine the speed of using threads.
+   This is just an illustration.
+*/
 SEXP 
 R_threaded_readDelays(SEXP filenames)
 {
@@ -85,6 +89,7 @@ R_threaded_readDelays(SEXP filenames)
 
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    /* Start n threads simultaneously */
     for(t = 0 ; t < n; t++) {
 	const char *fn = CHAR(STRING_ELT(filenames, t));
 	status = pthread_create(&thread[t], &attr, thread_readDelays, (void *)fn); 
@@ -94,6 +99,7 @@ R_threaded_readDelays(SEXP filenames)
 	}
     }
 
+    /* wait until all the threads have completed. */
     void *val;
     for(t = 0 ; t < n; t++) {
 	status = pthread_join(thread[t], &val);
