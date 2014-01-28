@@ -12,9 +12,9 @@ function(Y, k = 10L, theta = 1, lambda = 1, b1 = 1, b2 = 1, niter = 1e5)
   b2v[1] = b2  
   
   tmp = .C("R_mcmc", as.integer(niter), length(Y), theta = thetav, lambda = lambdav, 
-                 k = kv, b1 = b1v, b2 = b2v, as.numeric(Y))[c("theta", "lambda", "k", "b1", "b2")]
+                 k = kv, b1 = b1v, b2 = b2v, as.numeric(Y))
 
-   as.data.frame(tmp)
+   as.data.frame(tmp[c("theta", "lambda", "k", "b1", "b2")])
 }
 
 
