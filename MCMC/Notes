@@ -1,6 +1,11 @@
 Can use BUGS, JAGS, STAN (NIMBLE) to do this.
 We are implementing this ourselves for pedagogical purposes.
 
+Example comes from
+  Murali Haran, Penn State Dept. of Statistics
+and is very nicely explained at
+  http://sites.stat.psu.edu/~mharan/MCMCtut/MCMC.html
+with supporting PDF files that explain the math and algorithm.
 
 Gamma distribution
   different ways to parameterize it.
@@ -13,3 +18,4 @@ Inverse Gamma random variable is a 1 / X where X is a Gamma random variable.
 Use
   R CMD COMPILE mcmc.c
 since we will be using routines from R's Rmath library for random number generation.
+

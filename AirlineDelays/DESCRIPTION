@@ -8,3 +8,4 @@ Description: This explores different ways of computing the mean, median,
 License: GPL2
 Note: There is a new problem with one version of the thread code where we want to specify
   the field number to extract, but we just pass the name of the file.
+  That code is just an illustration of threads.

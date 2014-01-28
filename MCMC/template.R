@@ -73,6 +73,7 @@ function(NUMIT=1000,dat=Y)
         mchain[,i] = c(currtheta,currlambda,currk,currb1,currb2)
         
       }
+    
 
     cat("Markov chain algorithm ran for ",NUMIT,"iterations (acc.rate for k=",acc/(NUMIT-1),")\n")
     cat("Parameters are in order: theta, lambda, k, b1, b2\n")

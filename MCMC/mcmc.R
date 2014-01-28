@@ -24,10 +24,11 @@ chptdat = read.table("http://www.stat.psu.edu/~mharan/MCMCtut/COUP551_rates.dat"
 Y=chptdat[,2] # store data in Y
 runif(1)
 ans = mcmc(Y)
-system.time({ans = mcmc(Y)})
+system.time({ans = mcmc(Y, niter = 1e6)})
 
 
 source("template.R")
-system.time({a = mhsampler(1e5)})
+system.time({a = mhsampler(1e6)})
+
 
 }

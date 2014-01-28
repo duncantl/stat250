@@ -1,0 +1,1 @@
+This is a simple implementation of a MapReduce approach to get compute the frequency table of the arrival delay values.  The idea is that we have a collection of (uncompressed) CSV files in a directory named Data. Each of these has a header
