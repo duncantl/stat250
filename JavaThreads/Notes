@@ -1,0 +1,29 @@
+On lipschitz with no other processes running, we process the 1990-1999 csv files
+with a thread for each  and then sequentially. Timings
+sequential:  real	1m30.785s
+             user	1m33.025s
+             sys	0m1.256s
+
+parallel: real	0m9.997s
+	  user	1m28.032s
+	  sys	0m3.004s
+
+So 90.7 seconds versus 10. So a factor of 9.
+Why not 10 times faster?
+
+
+
+With 1987 - 2007.csv  (21 files)
+
+sequential: real	3m23.393s
+	    user	3m26.005s
+	    sys	0m3.160s
+
+parallel:  real	0m16.515s
+	   user	3m56.180s
+	   sys	0m5.480s
+
+So a speedup of 12, not 21
+
+
+Note that th 1987 finishes quite quickly.
