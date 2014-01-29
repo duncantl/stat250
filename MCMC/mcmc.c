@@ -72,6 +72,7 @@ mcmc(int numIterations, int n, double *theta, double *lambda,
 
 /* Call from R using the .C() rather than .Call() just to keep this simpler for
    a first go. */
+extern "C"
 void
 R_mcmc(int *numIterations, int *n, double *theta, double *lambda, int *k, double *b1, double *b2, double *Y)
 {
