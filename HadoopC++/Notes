@@ -1,0 +1,24 @@
+To run in pseudodistributed mode,
+  i) edit the configuration files in etc/hadoop
+       core-site.xml, hdfs-site.xml, mapred-site.xml  (with mapreduce.framework.name set to yarn)
+ ii) format HDFS
+       ~/Downloads/hadoop-2.2.0/bin/hdfs namenode -format
+iii) /Users/duncan/Downloads/hadoop-2.2.0/sbin/start-dfs.sh
+    /Users/duncan/Downloads/hadoop-2.2.0/sbin/start-yarn.sh
+
+
+
+Copy data 
+ set path=($HOME/Downloads/hadoop-2.2.0/bin $HOME/Downloads/hadoop-2.2.0/sbin $path)
+  ~/Downloads/hadoop-2.2.0/bin/hadoop dfs -copyFromLocal /Users/duncan/Data/Airline/Airlines/1988.csv /1988.csv
+
+New way:
+   hdfs dfs -copyFromLocal 1989.csv  /1989.csv
+
+   hdfs dfs -copyFromLocal delays  /bin/delays
+
+
+
+
+Build hadoop from source
+  mvn compile -X
