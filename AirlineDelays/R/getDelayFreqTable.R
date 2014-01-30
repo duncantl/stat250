@@ -27,10 +27,13 @@ getDelayTable_thread =
   # Take the files and field numbers and group them
   # and then divide them into numThreads groups.
   #
+  # for now, require the  caller to give us a list with as many elements as there are threads
+  # and each element is a character vector of the file names to process in that thread.
   #
 function(files, fieldNum = sapply(files, getFieldNum), numThreads = 4L)
 {
-  tt = .Call("R_threaded_multiReadDelays", as.integer(numThreads), TRUE, as.integer(fieldNum))
+#  fnames = split(files, fieldNum)
+  tt = .Call("R_threaded_multiReadDelays", files, as.integer(numThreads), TRUE, as.integer(fieldNum))
   tt[tt > 0]
 }
 
