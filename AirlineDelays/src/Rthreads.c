@@ -38,7 +38,7 @@ R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable, SE
     Table *tables[n];
 
     for(t = 0 ; t < n; t++) {
-	FileNames *fn = malloc(sizeof(FileNames));
+	FileNames *fn = malloc(sizeof(FileNames)); // memory will be lost unless we free() it!
 	fn->numEls = Rf_length(VECTOR_ELT(filenames, t));
 	fn->filenames = (const char * *) malloc(sizeof(char *) * fn->numEls);
 	fn->fieldNum = INTEGER(fieldNum)[t]; /* a single integer vector which means that all of the files in the same thread have to have the same field number. We can relax this restriction. */
