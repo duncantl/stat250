@@ -63,8 +63,16 @@ R_threaded_multiReadDelays(SEXP filenames, SEXP numThreads, SEXP returnTable, SE
     }
 
     if(LOGICAL(returnTable)[0]) {
-	Table *tmp = combineTables(tables, n, NULL/* was tables[0] */);
+#if 1
+        Table *tmp = combineTables(tables, n, tables[0]); //NULL/* was tables[0] */);
 	ans = convertTableToR(tmp);
+#else
+	PROTECT(ans = NEW_LIST(n));
+	for(t = 0; t < n; t++) {
+	  SET_VECTOR_ELT(ans, t, convertTableToR(tables[t]));
+	}
+	UNPROTECT(1);
+#endif
     }
 
 

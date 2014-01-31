@@ -32,8 +32,10 @@ makeTable(Table *tt)
     tt->min = - MAX_NUM_VALUES/2;
     tt->max = MAX_NUM_VALUES/2;
     tt->numValues = MAX_NUM_VALUES + 1;
+    tt->observedMax = -99999;
+    tt->observedMin = 99999;
 
-    memset(tt->values, 0, sizeof(int) * (MAX_NUM_VALUES + 1));
+    memset(tt->values, 0, sizeof(unsigned long) * (MAX_NUM_VALUES + 1));
     return(tt);
 }
 
@@ -74,11 +76,12 @@ storeValue(int value, void *data)
 }
 
 /* process a file, line by line.  */
-double
+unsigned long
 readDelays(const char *filename, void *data, int fieldNum)
 {
     FILE *f;
     char line[MAX_NUM_CHARS];
+    unsigned long count = 0;
 
     f = fopen(filename, "r");
     if(!f) 
@@ -91,9 +94,10 @@ readDelays(const char *filename, void *data, int fieldNum)
     while(fgets(line, MAX_NUM_CHARS, f)) {
 	val = readRecord(line, fieldNum);
 	storeValue(val, data);
+	count++;
     }
 
-    return((double) val);
+    return(count);
 }
 
 

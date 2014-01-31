@@ -15,8 +15,8 @@ thread_multi_readDelays(void *data)
     FileNames *fn = (FileNames *) data;
     int i;
     for(i = 0; i < fn->numEls; i++) {
-	fprintf(stderr, "%s\n", fn->filenames[i]);
-	readDelays(fn->filenames[i], fn->counts, fn->fieldNum);
+	unsigned long count = readDelays(fn->filenames[i], fn->counts, fn->fieldNum);
+	fprintf(stderr, "%s -> %ld\n", fn->filenames[i], count);
     }
     return(NULL);
 }
