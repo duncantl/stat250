@@ -1,0 +1,279 @@
+MapReduce
+
+ I'm trying to get you familiar with the raw tools to make use of MapReduce
+ and how to think about it.
+ We are focusing on doing simple things and exploratory data analysis
+ rather than fitting models like we discussed  on Tuesday.
+   How would you implement these
+
+ Sometimes easier to think at a higher-level or a different computational model.
+
+ One way is to write code in a higher-level language and have that program perform 
+ the MapReduce operations.
+
+ SQL is nice. But is Postgres/SQLite3/MySQL distributed?
+   If it is, how do we set it up and also distributed computations
+   for 
+
+ We still want to use Hadoop and its distributed nodes, fault tolerance.
+
+
+Pig Book online:  http://chimera.labs.oreilly.com/books/1234000001811/index.html
+ 
+ Pig is one language
+ H(ive)SQL is another
+
+ Pig is a dataflow language.
+     versus control flow - if, for, while.
+     Not necessarily good for implementing iterative algorithms.
+ Different from SQL
+    queries to get records
+      not how to do it, just what is wanted.
+      Pig gives a little more control over how.
+
+    Typically individually queries with results back into client
+       nested queries and temporary views/tables. But different model than Pig.
+       nesting - order is then backwards (first is innermost).
+    Focus on tables (views)
+
+ Pig can use schema or not (i.e. w/o them).
+    more flexible data
+     nested data types.
+
+ Focus is on processing all the data, not just 
+
+ But Pig is like  SQL.
+
+ Pig provides filter (keeping/omitting each record), 
+              projection (transforming each record)
+              group, join, order by, union,
+
+ Entire program is compiled to Map & Reduce tasks.
+    Analyzes entire data flow and change order of computations, reuse intermediate data, etc.
+    optimizes load balancing (e.g. when reducers get very different amounts of records)
+    can identify errors.
+
+   Can ask 'explain variable' and see the plan for the computations.
+
+ delays.pig
+
+EXAMPLES:
+ Now adapt this to compute the distributions grouped by year and airline carrier.
+   i.e. a frequency table for each airline - year pair
+     Start with the AVG() for each airline - year pair.
+
+ How do we add latitude and longitude to each record, or the full name of the carrier.
+   We can do it later rather than on all records but what if we did?
+   How would we do it in Map-Reduce? 
+    
+
+Pig types: scalars (int, long, float, double, chararray, bytearray),
+           complex types (tuples, bags, maps (associative array - can specify the common type for the elements if there is one))
+
+        map   [ carrier#'UA', delay#-21 ]
+        tuple - fixed length, ordered collection of fields  - 
+                  tuple corresponds to a record, field a variable.
+                can have schema which provides names  and optionally types
+                or can refer by position  $i, starting at 0.
+                 ('UA', -21)
+        bag  - unordered collection of _tuples_
+                so collection of records, e.g. from a group by or filter/subset.
+               {(a,b), (c, d), (e, f) }
+
+         null values -> unknown, like SQL or R's NA.
+
+Pig has explicit cast'ing, but will try automatic conversion when it can.
+  e.g. (int) 
+
+Nested types
+      a field can be a tuple or a map (or a bag)
+
+What is the format of a record (file) that has a field that is a tuple?
+
+Schema  - use the AS keyword
+  The loader may be able to tell Pig the schema and we don't have to declare it.
+  The data may be able to give this directly or the loader may be programmed to know it or determine it.
+
+
+Basic rules of the language
+
+Each step yields a new relation.
+We assign it to an alias (variable name).
+     restrictions on alias/variable names, but typical.
+Have to assign the result to an alias.
+Use ; to end a statement. 
+Comments  -- ... <eol>
+          or /* .... */
+
+
+
+
+   
+
+Operations
+  LOAD, STORE, DUMP
+  FILTER
+  GROUP
+  ORDER BY
+  FOREACH (with GENERATE)
+  DISTINCT
+  LIMIT
+  SAMPLE
+
+  FLATTEN
+
+LOAD  
+  var = load 'file' AS (tuple schema);
+    Expects TAB separated and no header. 
+    Can use a different loader via USING 
+      e.g. for CSV   USING PigStorage(',')
+
+  If a directory is specified, Pig reads all files it contains (and recursively).
+  Or use globs.
+
+
+STORE
+  Serialize relation to a directory and file.
+  Can change serialization format via USING as with LOAD
+
+DUMP
+  display a relation on the screen to the programmer
+
+
+FOREACH 
+  foreach relation GENERATE  expressions;
+  e.g. FOREACH delays GENERATE  ArrDelay, UniqueCarrier 
+   z = FOREACH records GENERATE ArrDelay, UniqueCarrier, Origin, ArrDelay - 10;
+
+  can refer to all fields * and up to start..end  using field names.
+
+  ternary operator
+     z = FOREACH records GENERATE ArrDelay, (ArrDelay < 0 ? 'EARLY' : 'LATE');
+
+  Functions on variables
+     z = FOREACH records GENERATE ABS(ArrDelay) AS Mine;
+*** This doesn't work.
+
+ AS is for each field in our new relation. Different from speciying entire schema in LOAD . AS ().
+   Related to FLATTEN
+
+FILTER  
+   FILTER records BY ArrDelay >= 0;
+
+   FILTER records BY not ArrDelay >= 0;
+
+    BY char MATCHES 'regex'
+
+   AND & OR to combine
+
+ Comparisons of tuples  - with the same schema.
+   not bags
+
+
+ Collection of FILTER UDFs which return Boolean values.
+
+
+GROUP
+   r = GROUP relation BY Field
+   r = GROUP relation BY (Field1, Field2)
+
+ The tuples in the result have a group field and the bag of matching tuples.
+ The name of the bag comes from the relation being grouped.
+   r = GROUP records BY UniqueCarrier;
+   DESCRIBE r;
+  Field names are group and records.
+
+ Can use GROUP rel ALL
+   Is this equivalent to R's unlist()?
+
+
+Some operations - GROUP, LIMIT, etc. - cause 
+ reduce steps because the records need to be sorted.
+
+ORDER
+   ORDER delays BY Year, Month;
+   ORDER delays BY Year desc, Month;  -- descending/reverse order for Year.
+
+
+DISTINCT
+  DISTINCT delays;
+   removes any duplicate tuples.
+
+SAMPLE
+   simple sampler <=> FILTER relation BY random() < percentValue;
+   not reproducible or give exact number.
+
+LIMIT
+   z = LIMIT delays 10;
+
+PARALLEL
+  can add to suggest how many reducers to use
+   z = GROUP delays BY UniqueCarrier PARALLE 10;
+
+
+
+** What is a join ***
+  inner, left, right, outer join
+
+JOIN - the big one.
+  Two relations, combine columns for corresponding rows using a shared key column(s)
+
+   z = JOIN A BY (field1, field2), B BY (fieldX, fieldY)
+
+
+CROSS
+  z = CROSS delays, delays;
+
+
+FLATTEN in FOREACH
+  Take a bag in a a tuple of a relation.
+   Create a new tuple for each element in the bag by combining it with the other variables.
+     FOREACH rel GENERATE a, FLATTEN(tup), c;
+        
+       gives 
+           (a tup[1] c)
+           (a tup[2] c)
+           (a tup[3] c)
+              ....
+          
+
+COGROUP
+UNION
+
+ Can define MACROS with DEFINE
+
+ bring results back into other language  at the end (e.g. R/python)
+
+ UDFs - User Defined Functions
+   adding our own (or other peoples)
+    piggybank.jar
+     e.g. for a date, days since some origin.
+
+    loaders for data via LOAD operation.
+
+   register  '..../my.jar'
+    FOREACH rel GENERATE  package.path.name.function(input, input);
+
+
+How can we insert a column giving the observation number.
+ Want to be able to CROSS with the row numbers so we can identify the pair subsequently.
+
+
+
+Debugging tools for Pig
+  describe
+  explain
+  illustrate
+
+
+
+AWS - Elastic Map Reduce (EMR).
+    Rent a hadoop cluster that's already setup
+
+ 
+
+ ADMM
+
+
+What about processing, e.g. images? or documents?
+  Sequence file?
