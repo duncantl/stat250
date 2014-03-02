@@ -1,0 +1,13 @@
+import nltk
+
+abstract = 'The objective of this project is to develop an infrastructure for the identification and steering of complex dynamical patterns in networks and spatiotemporal systems, tools for the goal of pattern steering include complex attractor reconstruction, state identification, and appropriate control protocols. Computational methods for changing the activity of a complex dynamical network from one state to another will be investigated. Complicated nonlinear networks appear to be multi-stable and multi-rhythmic, a mix of chaotic and periodic stable attractors, together with other metastable transients that may be effectively stable for the time interval of an engineering application. Computational methods will be developed to enable steering between these attractors, or dynamical patterns, and to perform this switching quickly and automatically. The project includes theoretical, computational, and experimental components. In particular, foundational work on adaptive Kalman filtering will be carried out that was motivated by previous exploratory work. Spiking networks with multiple attractors will be studied theoretically and hypotheses tested by simulation, as a proof of concept of steering techniques. Larger networks will be designed as a bridge to experiments. A new data-driven computational method called Diffusion-Mapped Delay Coordinates, a result of previous exploratory study, will be used for steering between basins of attractors. The developed methodologies will be tested in two different experimental platforms, neuronal cell cultures, and convection rolls in nematic liquid crystals. &lt;br/&gt;&lt;br/&gt;This work provides potentially pathbreaking contributions to the analysis and effective control of dynamical and spiking biological, bio-inspired, and more general engineering networks. Better understanding of this test case could be a first step to new approaches to optimization of energy transfer and production. The experimental examples have in common a lack of known equations of motion, which severely limits the use of classical control theory and motivates development of our new techniques. Throughout this study, emphasis will be placed on development of methodologies that generalize widely to other multistable dynamical networks. The project will provide concrete interdisciplinary training for graduate and postdoctoral students, who will be chosen from three different background areas, physics, mathematics, and engineering.'
+
+nltk.download('punkt')  # just need to do this once
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
+sents = tokenizer.tokenize(abstract)
+
+for s in sents:
+   w = nltk.word_tokenize(s)
+   print nltk.pos_tag(w)
+
