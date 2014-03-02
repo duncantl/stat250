@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1></h1>
+
+<dl>
+
+  <dt>
+  <li> Access data in an HTML table
+  <dd>
+<pre>
+u = 'http://en.wikipedia.org/wiki/List_of_countries_by_population'
+tbls = readHTMLTable(u)
+sapply(tbls, dim)
+
+tbls = readHTMLTable(u, which = 2,  stringsAsFactors = FALSE)
+</pre>
+      
+  <dt>
+  <li> <a href="cpi.R">Consumer Price Index HTML form</a>
+  <dd>
+The form is at
+ <a href="http://www.rateinflation.com/consumer-price-index/usa-historical-cpi">http://www.rateinflation.com/consumer-price-index/usa-historical-cpi</a>
+In this simple example, we can select a different starting year and
+  submit the form and see the URL in the navigation bar of our Web
+  browser:
+<pre>
+http://www.rateinflation.com/consumer-price-index/usa-historical-cpi?start-year=1989&end-year=2014
+</pre>
+This illustrates the two parameters for the form and their names -
+  start-year and end-year.
+In other cases, there may be more that are not apparent from the HTML
+  display but are in the HTML description of the form.
+In other cases, we may have to POST the request and the parameters
+  will be sent in the body of the request, not in the URL.
+<p>
+We can request the data with
+<pre>
+u =  'http://www.rateinflation.com/consumer-price-index/usa-historical-cpi?start-year=1989&end-year=2014'
+txt = getForm(u)
+</pre>
+Then we can parse this as an HTML document and then read the table(s)  in it:
+<pre>
+cpi = readHTMLTable( htmlParse(txt) )
+</pre>  
+
+For more complex cases (e.g. POST requests, where there are many
+      parameters, some hidden), we can use the RHTMLForms package to
+      read the description of a form from the HTML document.
+      Then we can programmatically generate  an R function from this
+      description   and then invoke this function with inputs from R.
+      See Lec14.Rsession.
+
+  <dt>
+  <li> Protein Data Bank's REST service
+  <dd><a href="pdb.R">pdb.R</a>
+
+      
+
+
+  <dt>
+  <li> Accessing the Elastic Search text engine via HTTP and REST.
+  <dd>
+       <a href="es.R">Elastic Search</a> and <a href="es1.R">es1.R</a>
+
+      
+  <dt>
+  <li> Zillow's Web API
+  <dd> You need to register (free) to get a ZillowID token (zwsid)
+<pre>
+u = 'http://www.zillow.com/webservice/GetSearchResults.htm'
+
+txt = getForm(u, 'zws-id' = ZillowId,  address = "1292 Monterey Avenue", citystatezip = "Berkeley, 94707")      
+</pre>      
+</dl>
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@r-project.org>&lt;duncan@r-project.org&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Sun Mar  2 11:51:24 PST 2014
+<!-- hhmts end -->
+</body> </html>

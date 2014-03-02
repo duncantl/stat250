@@ -1,0 +1,56 @@
+This is some of the code that we discussed about
+accessing data via the Web.
+
+
+Recall that the XML package allows us to manipulate
+XML documents and extract data from them.
+The key functions are
+
+ doc = xmlParse(fileNameOrURL)
+
+ nodes = getNodeSet(doc, "xpath query to access nodes of interest")
+
+ xmlName(node) - name of the XML element, i.e. <table> gives "table"
+ 
+ xmlAttrs(node) - a character vector of the attributes in the XML node
+      e.g. <a href="http://www.omegahat.org"  name="bob">...</a>
+          yields c(href = "http://www.omegahat.org", name = "bob")
+
+ xmlGetAttr(node, "attrName") retrieves the value of the specified attribute.
+       this also allows us to specify a default and also a function to convert the string value of the attribute value.
+
+ xmlChildren(node) - returns a list of the child nodes
+
+ xmlSApply(node, function(node) ...)  / xmlApply(node, function(node) ...)
+     applies the function to each of the children nodes
+
+
+
+
+
+xmlParse() can download documents via HTTP, and then parse them in one action.
+However, it cannot access documents via HTTPS, FTP, etc. or access documents 
+that aren't simple retrievals (i.e. HTTP GET operations). 
+In many cases, we want to submit additional data in the request for a document
+such as the parameters
+
+library(RCurl)
+
+data = getURLContent(u)
+
+There are many, many options we can use to customize how the request is performed.
+We can see these via
+
+    listCurlOptions()
+
+These are described at http://curl.haxx.se/libcurl/c/curl_easy_setopt.html
+
+The other functions are
+  getForm()
+  postForm()
+ 
+and the HTTP verb functions
+
+  httpGET(), httpPOST(), httpPUT(), httpDELETE(), httpOPTIONS(), httpHEAD()
+
+
