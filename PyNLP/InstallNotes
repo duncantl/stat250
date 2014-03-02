@@ -1,0 +1,27 @@
+
+We have to install various packages.
+If you don't have administrative privileges, you can install
+into your local directories.
+First, set the environment variable PYTHONPATH to a local directory, e.g.
+export PYTHONPATH=${HOME}/local/lib/python2.7/site-packages
+
+Now, download the nltk tar.gz file and extract its contents.
+Then
+cd nltk-2.0.4
+
+Now we can install the module with:
+
+python setup.py install --prefix=$HOME/local
+
+
+To perform Part of Speech analysis, we need extra data,
+just as we did for Java's openNLP. We can do this
+in python directly with:
+
+import nltk
+nltk.download('maxent_treebank_pos_tagger');
+
+
+
+There is a freely available book on Python and NLP
+   http://www.nltk.org/book/
