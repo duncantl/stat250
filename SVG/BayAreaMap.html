@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+<script type="text/javascript">
+function showPlot(filename)
+{
+  var plot_two = document.getElementById('pngImage');
+  if(plot_two) {
+// Should test for file. But how. Cannot see the local file system!
+//     alert('cannot find the file for ' + filename + ' county.');
+     plot_two.src = filename + '.png';
+  } else {
+     alert('cannot find the pngImage element in the HTML document.');
+  }
+}
+</script>
+</head>
+
+<body>
+<h1></h1>
+
+This is the HTML document we discussed at the end of class
+in March 4th.
+The idea is to have two plots. One is a map of the 
+counties in the Bay Area. We can click on a county
+and that will display a plot to the right of the map
+showing information about the houses sold in that county
+for the data we have.
+
+<div id="map">
+<object type="image/xml+svg" data="wordMap.svg" id="mapSVG" width="500"height="500">
+ SVG map seems unavailable
+</object>
+<input type="button" value="Show Marin" onclick="showPlot('Marin');"/>
+<div style="float: right">
+ <img src="priceBoxplots.png" id="pngImage"/>
+</div>
+</div>
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@r-project.org>&lt;duncan@r-project.org&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Wed Mar  5 06:55:15 PST 2014
+<!-- hhmts end -->
+</body> </html>

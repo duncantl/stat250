@@ -1,0 +1,16 @@
+<svg width="100%" height="100%"
+  viewBox="0 0 500 500"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<text x="377.128594" y="326.049461" onclick="parent.showPlot('Alameda')">Alameda</text>
+<text x="414.122944" y="215.498083" onclick="parent.showPlot('Contra Costa')">Contra Costa</text>
+<text x="117.927643" y="190.652172" onclick="parent.showPlot('Marin')">Marin</text>
+<text x="243.465808" y="38.320469" onclick="parent.showPlot('Napa')">Napa</text>
+<text x="176.396418" y="298.984004" onclick="parent.showPlot('San Francisco')">San Francisco</text>
+<text x="230.322746" y="385.327229" onclick="parent.showPlot('San Mateo')">San Mateo</text>
+<text x="475.000000" y="500.000000" onclick="parent.showPlot('Santa Clara')">Santa Clara</text>
+<text x="377.247189" y="84.059770" onclick="parent.showPlot('Solano')">Solano</text>
+<text x="25.000000" y="0.000000" onclick="parent.showPlot('Sonoma')">Sonoma</text>
+
+</svg>
